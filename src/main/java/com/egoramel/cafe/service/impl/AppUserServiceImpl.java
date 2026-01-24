@@ -5,8 +5,8 @@ import com.egoramel.cafe.model.dao.AppUserDao;
 import com.egoramel.cafe.model.dao.impl.AppUserDaoImpl;
 import com.egoramel.cafe.model.entity.AppUser;
 import com.egoramel.cafe.service.AppUserService;
-import com.egoramel.cafe.utils.PasswordEncryptor;
-import com.egoramel.cafe.utils.impl.PasswordEncryptorImpl;
+import com.egoramel.cafe.util.PasswordEncryptor;
+import com.egoramel.cafe.util.impl.PasswordEncryptorImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -69,10 +69,9 @@ public final class AppUserServiceImpl implements AppUserService {
     }
 
     @Override
-    public boolean authenticate(final String login, final String password) {
+    public AppUser authenticate(final String login, final String password) {
         LOGGER.debug("Authenticating user: {}.", login);
         final PasswordEncryptor passwordEncryptor = new PasswordEncryptorImpl();
-        boolean isPasswordMatched = false;
 
         try {
             final String encryptedPassword = passwordEncryptor.encrypt(password);
@@ -85,13 +84,15 @@ public final class AppUserServiceImpl implements AppUserService {
                 final AppUser foundAppUser = foundAppUserOptional.get();
                 final String foundAppUserPassword = foundAppUser.getUserPassword();
 
-                isPasswordMatched = encryptedPassword.equals(foundAppUserPassword);
+                if (encryptedPassword.equals(foundAppUserPassword)) {
+                    return foundAppUser;
+                }
             }
         } catch (final NoSuchAlgorithmException | CustomException e) {
             LOGGER.error("Encryption error during authentication for user '{}': {}.", login, e.getMessage());
         }
 
-        return isPasswordMatched;
+        return null;
     }
 
     private AppUser buildNewAppUser(final String login, final String encryptedPassword) {

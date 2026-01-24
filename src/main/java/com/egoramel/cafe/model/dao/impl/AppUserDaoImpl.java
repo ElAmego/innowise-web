@@ -6,14 +6,12 @@ import com.egoramel.cafe.model.entity.AppUser;
 import com.egoramel.cafe.exception.CustomException;
 import com.egoramel.cafe.model.mapper.AppUserMapper;
 import com.egoramel.cafe.model.mapper.Mapper;
-import com.egoramel.cafe.utils.ConnectionManager;
+import com.egoramel.cafe.util.ConnectionManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -83,13 +81,31 @@ public final class AppUserDaoImpl implements AppUserDao {
     }
 
     @Override
-    public List<AppUser> findAll() {
-        return List.of();
+    public List<AppUser> findAll() throws CustomException{
+        LOGGER.debug("Finding all users");
+        final List<AppUser> appUserList = new ArrayList<>();
+
+        try (final Connection connection = ConnectionManager.getConnection()) {
+            final Statement statement = connection.createStatement();
+            final ResultSet result = statement.executeQuery(AppUserSqlQuery.FIND_ALL_SQL);
+            final Mapper<AppUser> userMapper = new AppUserMapper();
+
+            while (result.next()) {
+                final AppUser appUser = userMapper.map(result);
+                appUserList.add(appUser);
+            }
+        } catch (final SQLException e) {
+            LOGGER.error("Error in all user finding.");
+            throw new CustomException(e);
+        }
+
+        return appUserList;
     }
 
     @Override
     public boolean save(final AppUser appUser) throws CustomException {
         LOGGER.debug("Saving new user.");
+
         try (final Connection connection = ConnectionManager.getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(AppUserSqlQuery.SAVE_SQL)) {
             preparedStatement.setString(1, appUser.getLogin());
@@ -108,11 +124,41 @@ public final class AppUserDaoImpl implements AppUserDao {
     }
 
     @Override
-    public void delete(AppUser entity) {
+    public void delete(final AppUser appUser) throws CustomException {
+        LOGGER.debug("Deleting user.");
+
+        try (final Connection connection = ConnectionManager.getConnection()) {
+            final Long appUserId = appUser.getUserId();
+            final PreparedStatement preparedStatement = connection.prepareStatement(AppUserSqlQuery.DELETE_SQL);
+
+            preparedStatement.setLong(1, appUserId);
+            preparedStatement.executeUpdate();
+        } catch (final SQLException e) {
+            LOGGER.debug("Error deleting user.");
+            throw new CustomException(e);
+        }
     }
 
     @Override
-    public AppUser update(AppUser entity) {
-        return null;
+    public AppUser update(final AppUser appUser) throws CustomException {
+        LOGGER.debug("Updating user.");
+
+        try (final Connection connection = ConnectionManager.getConnection()) {
+            final PreparedStatement preparedStatement = connection.prepareStatement(AppUserSqlQuery.DELETE_SQL);
+            preparedStatement.setString(1, appUser.getLogin());
+            preparedStatement.setString(2, appUser.getUserPassword());
+            preparedStatement.setString(3, appUser.getPhoneNumber());
+            preparedStatement.setInt(4, appUser.getLoyaltyPoints());
+            preparedStatement.setString(5, appUser.getUserStatus().toString());
+            preparedStatement.setString(6, appUser.getUserRole().toString());
+            preparedStatement.setLong(7, appUser.getUserId());
+
+            preparedStatement.executeUpdate();
+        } catch (final SQLException e) {
+            LOGGER.debug("Error updating user.");
+            throw new CustomException(e);
+        }
+
+        return appUser;
     }
 }

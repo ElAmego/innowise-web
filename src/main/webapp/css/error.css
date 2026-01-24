@@ -1,0 +1,152 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.error-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.error-card {
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 50px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    text-align: center;
+}
+
+.error-header {
+    margin-bottom: 30px;
+}
+
+.error-code {
+    font-size: 6rem;
+    font-weight: 800;
+    background: linear-gradient(90deg, #2575fc, #6a11cb);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    line-height: 1;
+    margin-bottom: 10px;
+}
+
+.error-title {
+    color: #2c3e50;
+    font-size: 2.2rem;
+    margin-bottom: 15px;
+}
+
+.error-subtitle {
+    color: #7f8c8d;
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+.error-message-box {
+    background-color: #f8f9fa;
+    border-radius: 12px;
+    padding: 25px;
+    margin-bottom: 30px;
+    border-left: 4px solid #2575fc;
+}
+
+.error-message-box p {
+    color: #2c3e50;
+    margin-bottom: 10px;
+    line-height: 1.6;
+    font-size: 1.1rem;
+}
+
+.error-icon {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    display: block;
+}
+
+.error-btn {
+    display: inline-block;
+    padding: 16px 40px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 10px;
+    min-width: 200px;
+}
+
+.btn-primary {
+    background: linear-gradient(90deg, #2575fc, #6a11cb);
+    color: white;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 7px 20px rgba(37, 117, 252, 0.3);
+}
+
+@media (max-width: 768px) {
+    .error-card {
+        padding: 40px;
+    }
+
+    .error-code {
+        font-size: 5rem;
+    }
+
+    .error-title {
+        font-size: 1.8rem;
+    }
+
+    .error-btn {
+        padding: 14px 32px;
+        min-width: 180px;
+    }
+}
+
+@media (max-width: 480px) {
+    .error-card {
+        padding: 30px;
+    }
+
+    .error-code {
+        font-size: 4rem;
+    }
+
+    .error-title {
+        font-size: 1.6rem;
+    }
+
+    .error-subtitle {
+        font-size: 1rem;
+    }
+
+    .error-btn {
+        width: 100%;
+        margin: 5px 0;
+        min-width: auto;
+    }
+
+    .error-icon {
+        font-size: 3rem;
+    }
+}
