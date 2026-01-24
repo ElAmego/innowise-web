@@ -4,6 +4,15 @@
     <title>Main</title>
 </head>
 <body>
-Hello! %{login}
+     <%
+        if (session.getAttribute("login") == null) {
+            response.sendRedirect(request.getContextPath() + "/pages/login.jsp");
+            return;
+        }
+    %>
+
+    <h2>User Information</h2>
+    <p><strong>Login:</strong> ${sessionScope.login}</p>
+    <p><strong>Role:</strong> ${sessionScope.user_role}</p>
 </body>
 </html>

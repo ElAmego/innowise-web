@@ -1,7 +1,8 @@
 package com.egoramel.cafe.controller.command.impl;
 
-import com.egoramel.cafe.controller.constant.AuthParam;
-import com.egoramel.cafe.controller.constant.ErrorMessage;
+import com.egoramel.cafe.controller.command.Router;
+import com.egoramel.cafe.controller.command.RouterType;
+import com.egoramel.cafe.controller.constant.AuthParameter;
 import com.egoramel.cafe.controller.constant.PagePath;
 import com.egoramel.cafe.controller.command.Command;
 import com.egoramel.cafe.service.AppUserService;
@@ -12,18 +13,21 @@ import org.apache.logging.log4j.Logger;
 
 public final class RegistrationCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
+    public static final String ERROR_MESSAGE_LOGIN =  "User with the specified login already exists. Specify new login.";
+    public static final String ERROR_MESSAGE =  "An error occurred during registration. Try one more time.";
+    public static final String ERROR_MESSAGE_BLANK_VALUES =  "Fields cannot be empty.";
 
     @Override
-    public String execute(final HttpServletRequest request) {
+    public Router execute(final HttpServletRequest request) {
         LOGGER.info("Starting user registration process.");
 
-        final String login = request.getParameter(AuthParam.LOGIN);
-        final String password = request.getParameter(AuthParam.PASSWORD);
+        final String login = request.getParameter(AuthParameter.LOGIN);
+        final String password = request.getParameter(AuthParameter.PASSWORD);
 
         if (login == null || password == null || login.isBlank() || password.isBlank()) {
             LOGGER.warn("Registration failed: login or password is null or blank.");
-            request.setAttribute(AuthParam.REGISTRATION_ERROR_MESSAGE, ErrorMessage.ERROR_MESSAGE_BLANK_VALUES);
-            return PagePath.REGISTRATION_PATH;
+            request.setAttribute(AuthParameter.REGISTRATION_ERROR_MESSAGE, ERROR_MESSAGE_BLANK_VALUES);
+            return new Router(PagePath.REGISTRATION_PATH, RouterType.FORWARD);
         }
 
         LOGGER.debug("Registration attempt for login: {}.", login);
@@ -33,8 +37,8 @@ public final class RegistrationCommand implements Command {
 
         if (isLoginExist) {
             LOGGER.warn("Registration failed: login '{}' already exists.", login);
-            request.setAttribute(AuthParam.REGISTRATION_ERROR_MESSAGE, ErrorMessage.ERROR_MESSAGE_LOGIN);
-            return PagePath.REGISTRATION_PATH;
+            request.setAttribute(AuthParameter.REGISTRATION_ERROR_MESSAGE, ERROR_MESSAGE_LOGIN);
+            return new Router(PagePath.REGISTRATION_PATH, RouterType.FORWARD);
         }
 
         LOGGER.debug("Creating new user with login: {}.", login);
@@ -42,11 +46,11 @@ public final class RegistrationCommand implements Command {
 
         if (isAppUserCreated) {
             LOGGER.info("User '{}' successfully registered.", login);
-            return PagePath.LOGIN_PATH;
+            return new Router(PagePath.LOGIN_PATH, RouterType.REDIRECT);
         } else {
             LOGGER.error("Failed to create user '{}' in database.", login);
-            request.setAttribute(AuthParam.REGISTRATION_ERROR_MESSAGE, ErrorMessage.ERROR_MESSAGE);
-            return PagePath.REGISTRATION_PATH;
+            request.setAttribute(AuthParameter.REGISTRATION_ERROR_MESSAGE, ERROR_MESSAGE);
+            return new Router(PagePath.REGISTRATION_PATH, RouterType.FORWARD);
         }
     }
 }

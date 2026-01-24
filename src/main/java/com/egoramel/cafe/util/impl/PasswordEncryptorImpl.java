@@ -1,6 +1,6 @@
-package com.egoramel.cafe.utils.impl;
+package com.egoramel.cafe.util.impl;
 
-import com.egoramel.cafe.utils.PasswordEncryptor;
+import com.egoramel.cafe.util.PasswordEncryptor;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;

@@ -1,4 +1,4 @@
-package com.egoramel.cafe.utils;
+package com.egoramel.cafe.util;
 
 import java.io.IOException;
 import java.io.InputStream;
