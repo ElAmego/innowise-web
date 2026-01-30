@@ -6,14 +6,6 @@
     <link rel="stylesheet" href="<%= request.getContextPath() %>/css/login.css">
 </head>
 <body>
-
-    <%
-        if (session != null && session.getAttribute("login") != null) {
-            response.sendRedirect(request.getContextPath() + "/pages/main.jsp");
-            return;
-        }
-    %>
-
     <div class="login-container">
         <div class="login-card">
             <div class="login-header">

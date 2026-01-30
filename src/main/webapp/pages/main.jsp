@@ -1,23 +1,18 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <html>
 <head>
     <title>Main</title>
 </head>
 <body>
-     <%
-        if (session.getAttribute("login") == null) {
-            response.sendRedirect(request.getContextPath() + "/pages/login.jsp");
-            return;
-        }
-    %>
+    <h2>Welcome ${sessionScope.login}!</h2>
 
-    <h2>User Information</h2>
-    <p><strong>Login:</strong> ${sessionScope.login}</p>
-    <p><strong>Role:</strong> ${sessionScope.user_role}</p>
+    <a href="../controller?command=all_users">All Users</a>
 
-    <form action="../controller" method="POST" class="login-form">
+    <form action="../controller" method="POST">
         <input type="hidden" name="command" value="logout"/>
-        <button type="submit" class="logout-btn">Logout</button>
+        <button type="submit">Logout</button>
     </form>
 </body>
 </html>
