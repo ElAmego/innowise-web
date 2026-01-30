@@ -14,5 +14,10 @@
     <h2>User Information</h2>
     <p><strong>Login:</strong> ${sessionScope.login}</p>
     <p><strong>Role:</strong> ${sessionScope.user_role}</p>
+
+    <form action="../controller" method="POST" class="login-form">
+        <input type="hidden" name="command" value="logout"/>
+        <button type="submit" class="logout-btn">Logout</button>
+    </form>
 </body>
 </html>

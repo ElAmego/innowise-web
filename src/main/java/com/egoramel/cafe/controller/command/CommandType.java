@@ -2,6 +2,7 @@ package com.egoramel.cafe.controller.command;
 
 import com.egoramel.cafe.controller.command.impl.DefaultCommand;
 import com.egoramel.cafe.controller.command.impl.LoginCommand;
+import com.egoramel.cafe.controller.command.impl.LogoutCommand;
 import com.egoramel.cafe.controller.command.impl.RegistrationCommand;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.LogManager;
@@ -11,6 +12,7 @@ import org.apache.logging.log4j.Logger;
 public enum CommandType {
     LOGIN(new LoginCommand()),
     REGISTRATION(new RegistrationCommand()),
+    LOGOUT(new LogoutCommand()),
     DEFAULT(new DefaultCommand());
 
     private static final Logger LOGGER = LogManager.getLogger();
