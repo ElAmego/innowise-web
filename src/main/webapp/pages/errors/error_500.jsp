@@ -21,7 +21,7 @@
                 <p>Please try again in a few moments or contact support if the problem continues.</p>
             </div>
 
-            <a href="<%= request.getContextPath() %>/pages/main.jsp" class="error-btn btn-primary">
+            <a href="../../index.jsp" class="error-btn btn-primary">
                 Go to Home Page
             </a>
         </div>
