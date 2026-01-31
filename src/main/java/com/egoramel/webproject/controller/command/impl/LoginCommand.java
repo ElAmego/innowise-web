@@ -2,7 +2,7 @@ package com.egoramel.webproject.controller.command.impl;
 
 import com.egoramel.webproject.controller.command.Router;
 import com.egoramel.webproject.controller.command.RouterType;
-import com.egoramel.webproject.controller.constant.AuthParameter;
+import com.egoramel.webproject.controller.constant.RequestParameter;
 import com.egoramel.webproject.controller.command.Command;
 import com.egoramel.webproject.controller.constant.PagePath;
 import com.egoramel.webproject.model.entity.AppUser;
@@ -22,12 +22,12 @@ public final class LoginCommand implements Command {
     public Router execute(final HttpServletRequest request) {
         LOGGER.info("Starting user login process.");
 
-        final String login = request.getParameter(AuthParameter.LOGIN);
-        final String password = request.getParameter(AuthParameter.PASSWORD);
+        final String login = request.getParameter(RequestParameter.LOGIN);
+        final String password = request.getParameter(RequestParameter.PASSWORD);
 
         if (login == null || password == null || login.isBlank() || password.isBlank()) {
             LOGGER.warn("Login failed: login or password is null or blank.");
-            request.setAttribute(AuthParameter.LOGIN_ERROR_MESSAGE, ERROR_MESSAGE_BLANK_VALUES);
+            request.setAttribute(RequestParameter.LOGIN_ERROR_MESSAGE, ERROR_MESSAGE_BLANK_VALUES);
             return new Router(PagePath.LOGIN_PATH, RouterType.FORWARD);
         }
 
@@ -40,14 +40,14 @@ public final class LoginCommand implements Command {
             LOGGER.info("User '{}' successfully authenticated.", login);
 
             final HttpSession httpSession = request.getSession(true);
-            httpSession.setAttribute(AuthParameter.USER_ID, foundAppUser.getUserId());
-            httpSession.setAttribute(AuthParameter.LOGIN, foundAppUser.getLogin());
-            httpSession.setAttribute(AuthParameter.USER_ROLE, foundAppUser.getUserRole());
+            httpSession.setAttribute(RequestParameter.USER_ID, foundAppUser.getUserId());
+            httpSession.setAttribute(RequestParameter.LOGIN, foundAppUser.getLogin());
+            httpSession.setAttribute(RequestParameter.USER_ROLE, foundAppUser.getUserRole());
             return new Router(PagePath.MAIN_PATH, RouterType.REDIRECT);
         }
 
         LOGGER.warn("Authentication failed for user '{}': incorrect credentials.", login);
-        request.setAttribute(AuthParameter.LOGIN_ERROR_MESSAGE, ERROR_MESSAGE_INCORRECT_DATA);
+        request.setAttribute(RequestParameter.LOGIN_ERROR_MESSAGE, ERROR_MESSAGE_INCORRECT_DATA);
         return new Router(PagePath.LOGIN_PATH, RouterType.FORWARD);
     }
 }

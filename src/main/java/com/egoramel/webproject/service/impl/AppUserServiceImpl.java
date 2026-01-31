@@ -69,6 +69,30 @@ public final class AppUserServiceImpl implements AppUserService {
     }
 
     @Override
+    public boolean deleteAppUser(final Object userIdObj) {
+        final String userIdStr = userIdObj.toString();
+        final Long userId = Long.valueOf(userIdStr);
+        final AppUserDao appUserDao = new AppUserDaoImpl();
+
+        try {
+            final Optional<AppUser> appUserOptional = appUserDao.findById(userId);
+
+            if (appUserOptional.isPresent()) {
+                final AppUser appUser = appUserOptional.get();
+                appUserDao.delete(appUser);
+
+                return true;
+            }
+
+            return false;
+        } catch (final CustomException e) {
+            LOGGER.error("An error occurred while deleting user account.");
+        }
+
+        return false;
+    }
+
+    @Override
     public AppUser authenticate(final String login, final String password) {
         LOGGER.debug("Authenticating user: {}.", login);
         final PasswordEncryptor passwordEncryptor = new PasswordEncryptorImpl();

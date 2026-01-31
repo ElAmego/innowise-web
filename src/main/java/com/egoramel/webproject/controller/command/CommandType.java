@@ -1,10 +1,6 @@
 package com.egoramel.webproject.controller.command;
 
-import com.egoramel.webproject.controller.command.impl.DefaultCommand;
-import com.egoramel.webproject.controller.command.impl.LoginCommand;
-import com.egoramel.webproject.controller.command.impl.LogoutCommand;
-import com.egoramel.webproject.controller.command.impl.RegistrationCommand;
-import com.egoramel.webproject.controller.command.impl.AllUsersCommand;
+import com.egoramel.webproject.controller.command.impl.*;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,6 +11,7 @@ public enum CommandType {
     REGISTRATION(new RegistrationCommand()),
     LOGOUT(new LogoutCommand()),
     ALL_USERS(new AllUsersCommand()),
+    DELETE(new DeleteCommand()),
     DEFAULT(new DefaultCommand());
 
     private static final Logger LOGGER = LogManager.getLogger();

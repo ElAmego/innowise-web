@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Cafe | Registration</title>
+    <title>Registration</title>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/css/registration.css">
 </head>
 <body>
