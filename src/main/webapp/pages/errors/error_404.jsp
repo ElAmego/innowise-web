@@ -21,7 +21,7 @@
                 <p>The page has been moved, deleted, or you entered an incorrect URL.</p>
             </div>
 
-            <a href="<%= request.getContextPath() %>/pages/main.jsp" class="error-btn btn-primary">
+            <a href="../../index.jsp" class="error-btn btn-primary">
                 Go to Home Page
             </a>
         </div>

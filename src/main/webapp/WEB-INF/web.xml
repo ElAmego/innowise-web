@@ -21,4 +21,28 @@
     <error-code>500</error-code>
     <location>/pages/errors/error_500.jsp</location>
   </error-page>
+
+  <filter>
+    <filter-name>AuthFilter</filter-name>
+    <filter-class>com.egoramel.webproject.controller.filter.AuthFilter</filter-class>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>AuthFilter</filter-name>
+    <url-pattern>/pages/all_users.jsp</url-pattern>
+    <url-pattern>/pages/main.jsp</url-pattern>
+    <url-pattern>/controller</url-pattern>
+  </filter-mapping>
+
+  <filter>
+    <filter-name>RedirectIfAuthenticatedFilter</filter-name>
+    <filter-class>com.egoramel.webproject.controller.filter.RedirectIfAuthenticatedFilter</filter-class>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>RedirectIfAuthenticatedFilter</filter-name>
+    <url-pattern>/index.jsp</url-pattern>
+    <url-pattern>/pages/login.jsp</url-pattern>
+    <url-pattern>/pages/registration.jsp</url-pattern>
+  </filter-mapping>
 </web-app>
