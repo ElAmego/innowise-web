@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>User Management | All Users</title>
+    <title>All Users</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/all_users.css">
 </head>
 <body>

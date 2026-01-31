@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Cafe | Welcome</title>
+    <title>Welcome page</title>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/css/index.css">
 </head>
 <body>

@@ -11,6 +11,11 @@
     <a href="../controller?command=all_users">All Users</a>
 
     <form action="../controller" method="POST">
+        <input type="hidden" name="command" value="delete"/>
+        <button type="submit">Delete Account</button>
+    </form>
+
+    <form action="../controller" method="POST">
         <input type="hidden" name="command" value="logout"/>
         <button type="submit">Logout</button>
     </form>
